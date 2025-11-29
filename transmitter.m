@@ -6,8 +6,9 @@
 % Variable E_p / N_0 Ratios
 % -------------------------------
 
-source();
+encoded_info = source();
 
+global t;
 global p_t;               % Pulse Function
 global y_t;               % Transmitted Pulse w/ Noise
 global pulse_train;       % Pulse Train
@@ -25,9 +26,9 @@ for i = 1:11
 
     % Binary Polar Signaling
     for j = 1:symbols
-        if message_encoded(j) == 1
+        if encoded_info(j) == 1
             p_t = 100 .* t .* exp(-10 .* t);
-        elseif message_encoded(j) == 0
+        elseif encoded_info(j) == 0
             p_t = -100 .* t .* exp(-10 .* t);
         end
 

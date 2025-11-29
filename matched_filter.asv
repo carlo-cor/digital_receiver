@@ -14,7 +14,7 @@ r_t = conv(y_t, h_t, 'same');  % Use 'same' to maintain original length
 % Create time vector for the convolution result
 t_conv = tau;  % For 'same' convolution, use original time vector
 
-figure;8 
+figure;
 plot(t_conv, r_t);
 xlabel("Time (seconds)");
 ylabel("Magnitude");
