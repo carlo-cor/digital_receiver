@@ -3,10 +3,15 @@
 % ---           Matched Filter Block             ---
 % --------------------------------------------------
 
-k = 1.0;                       % Adjusted receiver gain (changed from 0.0)
-t_0 = max(t);
+global h_t;
+global r_t;
 
-h_t = k * (100 .* (t_0 - t) .* exp(-10 .* (t_0 - t)));   % Matched Filter Impulse Response
+k = 1.0;       % Adjusted receiver gain 
+t_0 = max(t);
+tau = t_0 - t;
+
+t = t
+h_t = k * p_t;   % Matched Filter Impulse Response
 
 % Perform convolution
 r_t = conv(y_t, h_t, 'same');  % Use 'same' to maintain original length
@@ -14,9 +19,30 @@ r_t = conv(y_t, h_t, 'same');  % Use 'same' to maintain original length
 % Create time vector for the convolution result
 t_conv = tau;  % For 'same' convolution, use original time vector
 
-figure;
-plot(t_conv, r_t);
+figure; 
+plot(t, p_t, 'LineWidth', 2);
 xlabel("Time (seconds)");
 ylabel("Magnitude");
-title("Matched Filter Response");
+title("Original Pulse Signal");
+grid on;
+
+figure; 
+plot(t, y_t, 'LineWidth', 2);
+xlabel("Time (seconds)");
+ylabel("Magnitude");
+title("Pulse Signal w/ Noise");
+grid on;
+
+figure; 
+plot(t_conv, h_t, 'LineWidth', 2);
+xlabel("Time (seconds)");
+ylabel("Magnitude");
+title("Matched Filter Impulse Response");
+grid on;
+
+figure; 
+plot(t_conv, r_t, 'LineWidth', 2);
+xlabel("Time (seconds)");
+ylabel("Magnitude");
+title("Filtered Signal");
 grid on;
