@@ -1,37 +1,31 @@
 % --------------------------------------------------
 % ---                 EENG 421                   ---
-% ---             Transmitter Block              ---
+% ---            Transmitter Block               ---
 % --------------------------------------------------
 
-% Variable E_p / N_0 Ratios
-% -------------------------------
-
-encoded_info = source();
-
-global t;
-global p_t;               % Pulse Function
-global y_t;               % Transmitted Pulse w/ Noise
-global pulse_train;       % Pulse Train
-
-energy_div_nsd = 0:10;        % Energy Pulse Divided by Noise Spectral Density
-f_s = 200;                    % Sampling Rate @ 200 Hz
-r_s = 1;                      % Symbol Rate
-t = linspace(0, 1, f_s);      % Symbol t Range Defined
-
-% Transmitted Signal Computations
-% -------------------------------
-
-for i = 1:11
-    snr_val = energy_div_nsd(i) + 10 .* log((2 .* r_s) ./ f_s);  % Signal-Noise Ratio Values Computed
-
-    % Binary Polar Signaling
-    for j = 1:symbols
-        if encoded_info(j) == 1
-            p_t = 100 .* t .* exp(-10 .* t);
-        elseif encoded_info(j) == 0
-            p_t = -100 .* t .* exp(-10 .* t);
+function [pulse_matrix, snr_vals, message_encoded] = transmitter(energy_nsd_ratio, time, symbol_rate, sampling_rate)
+    
+    [num_symbols, message, message_encoded] = source();
+    
+    % Calculate pulse shape once (basis function)
+    pulse_shape = 100 .* time .* exp(-10 .* time);
+    
+    % Create pulse matrix: each row is a pulse for one symbol
+    pulse_matrix = zeros(num_symbols, length(time));
+    
+    % Create all pulses in matrix form
+    for j = 1:num_symbols
+        if message_encoded(j) == 1
+            pulse_matrix(j, :) = pulse_shape;
+        elseif message_encoded(j) == 0
+            pulse_matrix(j, :) = -pulse_shape;
         end
-
-        y_t = awgn(p_t, snr_val, 'measured');                    % Received Signal (Pulse Function + AWGN)
     end
+    
+    % Calculate SNR values for all energy_nsd_ratio values
+    snr_vals = zeros(size(energy_nsd_ratio));
+    for i = 1:length(energy_nsd_ratio)
+        snr_vals(i) = energy_nsd_ratio(i) + 10 .* log10((2 .* symbol_rate) ./ sampling_rate);
+    end
+    
 end

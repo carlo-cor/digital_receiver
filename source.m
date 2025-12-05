@@ -2,11 +2,8 @@
 % ---                 EENG 421                   ---
 % ---               Source Block                 ---
 % --------------------------------------------------
-function[message_encoded] = source()
 
-    global symbols;
-    global message;
-    
+function [symbols, message, message_encoded] = source()
     for dB = 1:11
         if dB == 8
             symbols = 2e+6;
@@ -17,7 +14,7 @@ function[message_encoded] = source()
         else
             symbols = 1e+6;
         end
-        
+            
         message(dB) = symbols;
         message_encoded = randi([0, 1], 1, symbols);
     end
