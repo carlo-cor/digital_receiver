@@ -3,23 +3,28 @@
 % ---           Matched Filter Block             ---
 % --------------------------------------------------
 
+global energy_div_nsd;
+global f_s;
+
+global y_t;
 global h_t;
 global r_t;
 
+% Variable E_p / N_0 Ratios
+% -------------------------------
+k = 1.0;                      % Adjusted receiver gain 
+energy_div_nsd = 0:10;        % Energy Pulse Divided by Noise Spectral Density
+f_s = 200;                    % Sampling Rate @ 200 Hz
+r_s = 1;                      % Symbol Rate
 t = linspace(0, 1, f_s);      % Symbol t Range Defined
-p_t = transmitter(t);
 
-k = 1.0;       % Adjusted receiver gain 
-t_0 = max(t);
-tau = t_0 - t;
+[p_t, snr_val, message] = transmitter(energy_div_nsd, t, r_s, f_s);
+y_t = awgn(p_t, snr_val, 'measured');
 
-% NOTE: Reformat p_t to pass in different values (tau or t_0 - t); fix
-% generally
-h_t = k * transmitter(tau)   % Matched Filter Impulse Response; TEMPORARY EXAMPLE
-h_t = fliplr(h_t);
+h_t = k * flip(p_t);              % Matched Filter Impulse Response
 
 % Perform convolution
-r_t = conv(y_t, h_t, 'same');  % Use 'same' to maintain original length
+r_t = conv(y_t, h_t, 'same');  
 
-% Create time vector for the convolution result
-t_conv = tau;  % For 'same' convolution, use original time vector
+t_conv = t;
+

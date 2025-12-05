@@ -3,10 +3,7 @@
 % ---               Source Block                 ---
 % --------------------------------------------------
 
-function [symbols] = source()
-    global message;
-    global message_encoded;
-        
+function [symbols, message, message_encoded] = source()
     for dB = 1:11
         if dB == 8
             symbols = 2e+6;
