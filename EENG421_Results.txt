@@ -1,0 +1,27 @@
+EENG 421 Digital Receiver Project Results
+==========================================
+
+System Parameters:
+  Pulse shape: p(t) = 100t*exp(-10t), 0 <= t <= 1 s
+  Sampling rate: f_s = 200 Hz
+  Symbol period: T0 = 1 s
+  Total pulse energy: E_p = 2.487498 J
+
+Out-of-Band Energy Results:
+  Nyquist rate: 100 Hz
+  Out-of-band energy at Nyquist: -153.53 dB
+
+Error Probability Results:
+E_p/N_0 (dB) | Theoretical P_e | Simulated P_e | Total Symbols | Total Errors
+---------------------------------------------------------------------------
+        0.0 |      7.865e-02 |     7.897e-02 |         1e+06 |        78970
+        1.0 |      5.628e-02 |     5.652e-02 |         1e+06 |        56515
+        2.0 |      3.751e-02 |     3.791e-02 |         1e+06 |        37914
+        3.0 |      2.288e-02 |     2.305e-02 |         1e+06 |        23050
+        4.0 |      1.250e-02 |     1.279e-02 |         1e+06 |        12786
+        5.0 |      5.954e-03 |     5.971e-03 |         1e+06 |         5971
+        6.0 |      2.388e-03 |     2.361e-03 |         1e+06 |         2361
+        7.0 |      7.727e-04 |     7.410e-04 |         1e+06 |          741
+        8.0 |      1.909e-04 |     1.940e-04 |         2e+06 |          388
+        9.0 |      3.363e-05 |     3.460e-05 |         5e+06 |          173
+       10.0 |      3.872e-06 |     4.100e-06 |         1e+07 |           41
